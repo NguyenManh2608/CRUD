@@ -16,14 +16,16 @@ let con = mysql.createConnection({
 });
 
 app.get('/books/get', function(req, res) {
-    con.query('select * from Books WHERE isDelete = 0',function (err, result) {
+    con.query('SELECT id, title, author, publisher, price FROM Books WHERE isDelete = 0', function (err, result) {
         if(err) throw err;
         res.json(result);
     });
 });
 
 app.get('/book/get/:id', function (req, res) {
-    con.query('select * from Books WHERE id = ? limit 1' ,req.params.id, function (err, result) {
+    con.query('SELECT id, title, author, publisher, price FROM Books WHERE id = ? limit 1',
+        req.params.id,
+        function (err, result) {
         if(err)  res.status(404).send({ message : " Not Found this file"});
         res.json(result);
     });
